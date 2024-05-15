@@ -79,4 +79,20 @@ protected:
 	// Verification if the player can make the time goes forward
 	UFUNCTION(BlueprintCallable)
 	virtual bool CanForwardTime();
+
+	// Will call the manager of time manipulator and make the time reduce (making it goes backward or stop depeding the state)
+	UFUNCTION(BlueprintCallable)
+	virtual void ReduceTime();
+
+	// Verification if the player can make the time reduce
+	UFUNCTION(BlueprintCallable)
+	virtual bool CanReduceTime();
+
+	// Will call the manager of time manipulator and make the time incrase (making it goes forward or stop depeding the state)
+	UFUNCTION(BlueprintCallable)
+	virtual void IncraseTime();
+
+	// Verification if the player can make the time incrase
+	UFUNCTION(BlueprintCallable)
+	virtual bool CanIncraseTime();
 };

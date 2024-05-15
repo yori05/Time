@@ -2,6 +2,8 @@
 
 #pragma once
 
+/**-----------------	Include declaration		-----------------*/
+
 #include "CoreMinimal.h"
 #include "Component/TimeManipulator/TMComp_CurveBasic.h"
 
@@ -87,16 +89,24 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Location", meta = (AllowPrivateAccess = "true"))
 	FVector LocationVector;
 
+	/** Used to calculate the lerp for the location of the acter owner before record / replay it can be used on debug */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Location", meta = (AllowPrivateAccess = "true"))
+	FVector LocationVectorA;
+
+	/** Used to calculate the lerp for the location of the acter owner before record / replay it can be used on debug */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Location", meta = (AllowPrivateAccess = "true"))
+	FVector LocationVectorB;
+
 	/** Used to save the rotation of the acter owner before record / replay it can be used on debug */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Rotation", meta = (AllowPrivateAccess = "true"))
 	FRotator RotationRotator;
 
 	/** Used to calculate the lerp for the rotation of the acter owner before record / replay it can be used on debug */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Rotation", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Rotation", meta = (AllowPrivateAccess = "true"))
 	FRotator RotationRotatorA;
 
 	/** Used to calculate the lerp for the rotation of the acter owner before record / replay it can be used on debug */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Rotation", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Rotation", meta = (AllowPrivateAccess = "true"))
 	FRotator RotationRotatorB;
 
 	/**
@@ -110,14 +120,14 @@ protected:
 	* Used to calculate the lerp for the rotation of the acter owner before record / replay it can be used on debug
 	* X = Pitch / Y = Yaw / Z = Roll
 	*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Rotation", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Rotation", meta = (AllowPrivateAccess = "true"))
 	FVector RotationVectorA;
 
 	/**
 	* Used to calculate the lerp for the rotation of the acter owner before record / replay it can be used on debug
 	* X = Pitch / Y = Yaw / Z = Roll
 	*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Rotation", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Rotation", meta = (AllowPrivateAccess = "true"))
 	FVector RotationVectorB;
 
 	/** Used to save the scale of the acter owner before record / replay it can be used on debug */

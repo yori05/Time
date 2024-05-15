@@ -50,9 +50,10 @@ void UTMComponent_PhysicsBasic::ActivateRecordState()
 	if (IsValid(SavedPhysicComponent) && bStopPhysicOnState)
 	{
 		SavedPhysicComponent->SetSimulatePhysics(true);
+		SavedPhysicComponent->SetEnableGravity(true);
 
-		//SavedPhysicComponent->SetPhysicsLinearVelocity(VelocityVector);
-		//SavedPhysicComponent->SetPhysicsAngularVelocityInRadians(AngularVelocityVector);
+		SavedPhysicComponent->SetPhysicsLinearVelocity(VelocityVector);
+		SavedPhysicComponent->SetPhysicsAngularVelocityInRadians(AngularVelocityVector);
 	}
 }
 
@@ -63,6 +64,7 @@ void UTMComponent_PhysicsBasic::ActivateStopState()
 	if (IsValid(SavedPhysicComponent) && bStopPhysicOnState)
 	{
 		SavedPhysicComponent->SetSimulatePhysics(false);
+		SavedPhysicComponent->SetEnableGravity(false);
 
 		//SavedPhysicComponent->SetPhysicsLinearVelocity(FVector::ZeroVector);
 		//SavedPhysicComponent->SetPhysicsAngularVelocityInRadians(FVector::ZeroVector);
@@ -76,9 +78,13 @@ void UTMComponent_PhysicsBasic::ActivateReplayState()
 	if (IsValid(SavedPhysicComponent) && bStopPhysicOnState)
 	{
 		SavedPhysicComponent->SetSimulatePhysics(false);
+		SavedPhysicComponent->SetEnableGravity(false);
 
-		//SavedPhysicComponent->SetPhysicsLinearVelocity(VelocityVector);
-		//SavedPhysicComponent->SetPhysicsAngularVelocityInRadians(AngularVelocityVector);
+		VelocityVector = SavedPhysicComponent->GetPhysicsLinearVelocity();
+		AngularVelocityVector = SavedPhysicComponent->GetPhysicsAngularVelocityInRadians();
+
+		SavedPhysicComponent->SetPhysicsLinearVelocity(FVector::ZeroVector);
+		SavedPhysicComponent->SetPhysicsAngularVelocityInRadians(FVector::ZeroVector);
 	}
 }
 
@@ -314,7 +320,15 @@ void UTMComponent_PhysicsBasic::ReplayLocationCurve()
 		{
 			TimeScoped = TimeSaved - ((bIncrementByStep) ? TimeElapsed : 0.f); // Real time
 			LocationVector = LocationCurve->GetVectorValue(TimeScoped);
-			SavedPhysicComponent->SetWorldLocation(LocationVector);
+
+			TimeScoped = TimeSaved - ((!bIncrementByStep) ? TimeElapsed : 0.f); // Time of the current step made to scope
+			LocationVectorA = LocationCurve->GetVectorValue(TimeScoped);
+
+			TimeScoped = TimeSaved - ((!bIncrementByStep) ? TimeElapsed : 0.f) - TimeStep; // Time of the next step made to scope
+			LocationVectorB = LocationCurve->GetVectorValue(TimeScoped);
+
+			LocationVector = FMath::Lerp(LocationVectorA, LocationVectorB, 1 - (TimeElapsed / TimeStep));
+			SavedPhysicComponent->SetWorldLocation(LocationVector, false, nullptr,ETeleportType::TeleportPhysics);
 		}
 	}
 }
@@ -337,9 +351,8 @@ void UTMComponent_PhysicsBasic::ReplayRotationCurve()
 		
 			RotationRotatorA = FRotator(RotationVectorA.X, RotationVectorA.Y, RotationVectorA.Z);
 			RotationRotatorB = FRotator(RotationVectorB.X, RotationVectorB.Y, RotationVectorB.Z);
-			RotationRotator = FRotator(FQuat::Slerp(RotationRotatorA.Quaternion(), RotationRotatorB.Quaternion(), TimeElapsed / TimeStep)); //FMath::LerpRange(RotationRotatorA, RotationRotatorB, TimeElapsed / TimeStep);
-			//RotationRotator = FRotator(RotationVector.X, RotationVector.Y, RotationVector.Z);
-			SavedPhysicComponent->SetWorldRotation(RotationRotator);
+			RotationRotator = FRotator(FQuat::Slerp(RotationRotatorA.Quaternion(), RotationRotatorB.Quaternion(), 1 -(TimeElapsed / TimeStep))); //FMath::LerpRange(RotationRotatorA, RotationRotatorB, TimeElapsed / TimeStep);
+			SavedPhysicComponent->SetWorldRotation(RotationRotator, false, nullptr, ETeleportType::TeleportPhysics);
 		}
 
 
@@ -370,7 +383,7 @@ void UTMComponent_PhysicsBasic::ReplayVelocityCurve()
 			TimeScoped = TimeSaved - ((bIncrementByStep) ? TimeElapsed : 0.f); // Real time
 			VelocityVector = VelocityCurve->GetVectorValue(TimeScoped);
 	
-			SavedPhysicComponent->SetPhysicsLinearVelocity(VelocityVector);
+			//SavedPhysicComponent->SetPhysicsLinearVelocity(VelocityVector);
 		}
 	}
 }
@@ -384,7 +397,7 @@ void UTMComponent_PhysicsBasic::ReplayAngularVelocityCurve()
 			TimeScoped = TimeSaved - ((bIncrementByStep) ? TimeElapsed : 0.f); // Real time
 			AngularVelocityVector = AngularVelocityCurve->GetVectorValue(TimeScoped);
 
-			SavedPhysicComponent->SetPhysicsAngularVelocityInRadians(AngularVelocityVector);
+			//SavedPhysicComponent->SetPhysicsAngularVelocityInRadians(AngularVelocityVector);
 		}
 
 	}

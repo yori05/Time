@@ -25,8 +25,8 @@ void APlCont_TimeManipulator::SetupInputComponent()
 	// Set up action bindings
 	if (IsValid(EnhancedInputComponent))
 	{
-		EnhancedInputComponent->BindAction(BackwardTimeAction, ETriggerEvent::Started, this, &APlCont_TimeManipulator::MakeBackwardTime);
-		EnhancedInputComponent->BindAction(ForwardTimeAction, ETriggerEvent::Started, this, &APlCont_TimeManipulator::MakeForwardTime);
+		EnhancedInputComponent->BindAction(BackwardTimeAction, ETriggerEvent::Started, this, &APlCont_TimeManipulator::ReduceTime);
+		EnhancedInputComponent->BindAction(ForwardTimeAction, ETriggerEvent::Started, this, &APlCont_TimeManipulator::IncraseTime);
 
 	}
 
@@ -87,6 +87,62 @@ bool APlCont_TimeManipulator::CanForwardTime()
 	if (IsValid(TM_ManagerRef))
 	{
 		return TM_ManagerRef->CanLaunchRecordState();
+	}
+
+	return false;
+}
+
+void APlCont_TimeManipulator::ReduceTime()
+{
+	if (CanReduceTime())
+	{
+		if (IsValid(TM_ManagerRef))
+		{
+			if (TM_ManagerRef->IsInHoldState())
+			{
+				TM_ManagerRef->LaunchReplayState();
+			}
+			else
+			{
+				TM_ManagerRef->LaunchStopState();
+			}
+		}
+	}
+}
+
+bool APlCont_TimeManipulator::CanReduceTime()
+{
+	if (IsValid(TM_ManagerRef))
+	{
+		return TM_ManagerRef->CanLaunchReplayState() || TM_ManagerRef->CanLaunchStopState();
+	}
+
+	return false;
+}
+
+void APlCont_TimeManipulator::IncraseTime()
+{
+	if (CanReduceTime())
+	{
+		if (IsValid(TM_ManagerRef))
+		{
+			if (TM_ManagerRef->IsInHoldState())
+			{
+				TM_ManagerRef->LaunchRecordState();
+			}
+			else
+			{
+				TM_ManagerRef->LaunchStopState();
+			}
+		}
+	}
+}
+
+bool APlCont_TimeManipulator::CanIncraseTime()
+{
+	if (IsValid(TM_ManagerRef))
+	{
+		return TM_ManagerRef->CanLaunchRecordState() || TM_ManagerRef->CanLaunchStopState();
 	}
 
 	return false;
