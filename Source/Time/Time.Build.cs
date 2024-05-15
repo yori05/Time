@@ -9,5 +9,9 @@ public class Time : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
-	}
+
+        PublicDependencyModuleNames.AddRange(new string[] { "Module_Basic" });
+
+        PrivateDependencyModuleNames.AddRange(new string[] { "GameplayTasks" });
+    }
 }

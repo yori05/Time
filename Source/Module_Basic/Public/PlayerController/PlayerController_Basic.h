@@ -2,17 +2,21 @@
 
 #pragma once
 
+/**-----------------	Include declaration		-----------------*/
+
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "PlayerController_Basic.generated.h"
 
 
 /**-----------------	Exterior class declaration		-----------------*/
+
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
 
 /**-----------------	Log definition Part		-----------------*/
+
 DECLARE_LOG_CATEGORY_EXTERN(LogPlayerControllerBasic, Log, All);
 
 /**
@@ -24,7 +28,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogPlayerControllerBasic, Log, All);
  * 
  */
 UCLASS(config = Game)
-class TIME_API APlayerController_Basic : public APlayerController
+class MODULE_BASIC_API APlayerController_Basic : public APlayerController
 {
 	GENERATED_BODY()
 	

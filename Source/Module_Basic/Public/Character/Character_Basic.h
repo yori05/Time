@@ -24,7 +24,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FCharacterBasicEventSignature);
  * 
  */
 UCLASS(config = Game)
-class TIME_API ACharacter_Basic : public ACharacter
+class MODULE_BASIC_API ACharacter_Basic : public ACharacter
 {
 	GENERATED_BODY()
 

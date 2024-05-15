@@ -2,14 +2,22 @@
 
 #pragma once
 
+/**-----------------	Include declaration		-----------------*/
+
 #include "CoreMinimal.h"
 #include "Character/Character_Basic.h"
 #include "PlayerCharacter_Basic.generated.h"
 
+/**-----------------	Exterior class declaration		-----------------*/
+
 class USpringArmComponent;
 class UCameraComponent;
 
+/**-----------------	Log declaration		-----------------*/
+
 DECLARE_LOG_CATEGORY_EXTERN(LogPlayerCharacter, Log, All);
+
+/**-----------------	Delegate declaration		-----------------*/
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayCharBasicEventSignature);
 
@@ -25,7 +33,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayCharBasicEventSignature);
  * 
  */
 UCLASS(config = Game)
-class TIME_API APlayerCharacter_Basic : public ACharacter_Basic
+class MODULE_BASIC_API APlayerCharacter_Basic : public ACharacter_Basic
 {
 	GENERATED_BODY()
 	

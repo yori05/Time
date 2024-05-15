@@ -18,7 +18,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FGMBasicEventSignature);
  * Have the possibility to quit, pause and resume the game
  */
 UCLASS()
-class TIME_API AGameMode_Basic : public AGameModeBase
+class MODULE_BASIC_API AGameMode_Basic : public AGameModeBase
 {
 	GENERATED_BODY()
 	
