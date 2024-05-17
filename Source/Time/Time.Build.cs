@@ -10,6 +10,8 @@ public class Time : ModuleRules
 
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
 
+        PrivateDependencyModuleNames.AddRange(new string[] { "UMG", "Slate", "SlateCore" });
+
         PublicDependencyModuleNames.AddRange(new string[] { "Module_Basic" });
 
         PrivateDependencyModuleNames.AddRange(new string[] { "GameplayTasks" });

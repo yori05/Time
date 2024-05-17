@@ -10,6 +10,8 @@ public class Module_Basic : ModuleRules
 
         PrivateDependencyModuleNames.AddRange(new string[] {"Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
 
+        PrivateDependencyModuleNames.AddRange(new string[] { "UMG", "Slate", "SlateCore" });
+
         PrivateDependencyModuleNames.AddRange(new string[] { "GameplayTasks" });
     }
 }
