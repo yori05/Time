@@ -114,7 +114,7 @@ bool APlCont_TimeManipulator::CanReduceTime()
 {
 	if (IsValid(TM_ManagerRef))
 	{
-		return TM_ManagerRef->CanLaunchReplayState() || TM_ManagerRef->CanLaunchStopState();
+		return !TM_ManagerRef->IsInReplayState() && (TM_ManagerRef->CanLaunchReplayState() || TM_ManagerRef->CanLaunchStopState());
 	}
 
 	return false;
@@ -122,7 +122,7 @@ bool APlCont_TimeManipulator::CanReduceTime()
 
 void APlCont_TimeManipulator::IncraseTime()
 {
-	if (CanReduceTime())
+	if (CanIncraseTime())
 	{
 		if (IsValid(TM_ManagerRef))
 		{
@@ -142,7 +142,7 @@ bool APlCont_TimeManipulator::CanIncraseTime()
 {
 	if (IsValid(TM_ManagerRef))
 	{
-		return TM_ManagerRef->CanLaunchRecordState() || TM_ManagerRef->CanLaunchStopState();
+		return !TM_ManagerRef->IsInRecordState() && (TM_ManagerRef->CanLaunchRecordState() || TM_ManagerRef->CanLaunchStopState());
 	}
 
 	return false;

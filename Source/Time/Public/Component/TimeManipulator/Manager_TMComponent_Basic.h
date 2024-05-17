@@ -165,8 +165,8 @@ public:
 
 	FORCEINLINE TArray<TObjectPtr<UTimeManipulatorComponent_Basic>> GetTMComponents() { return TMComponents; }
 
-	FORCEINLINE bool IsInBackwardState() { return TMState_Current == ETimeManipulatorState::TMS_Backward; };
+	FORCEINLINE bool IsInReplayState() { return TMState_Current == ETimeManipulatorState::TMS_Backward; };
 	FORCEINLINE bool IsInHoldState() { return TMState_Current == ETimeManipulatorState::TMS_Hold; };
-	FORCEINLINE bool IsInForwardState() { return TMState_Current == ETimeManipulatorState::TMS_Forward; };
+	FORCEINLINE bool IsInRecordState() { return TMState_Current == ETimeManipulatorState::TMS_Forward; };
 
 };
